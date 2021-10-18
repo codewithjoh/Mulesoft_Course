@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="peopleData" format="json">
+      <types:shape format="weave" example="peopleName.json"><![CDATA[%dw 2.0
+
+type peopleData = {| people: {| person: {| name: String |} |} |} {"example": "{\\\"people\\\":{\\\"person\\\":{\\\"name\\\":\\\"Ben\\\"}}}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="fieldCourse" format="json">
+      <types:shape format="weave" example="examples/fieldsCourse.json"><![CDATA[%dw 2.0
+
+type fieldCourse = {|
+  field1: String, 
+  field2: String, 
+  field3: String
+|} {"example": "{\\\"field1\\\":\\\"Mulesoft\\\",\\\"field2\\\":\\\"Course\\\",\\\"field3\\\":\\\"fundamentals\\\"}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#4110fe95-0c5d-4a81-8c56-40f2cc3cea9c">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="peopleData"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#e4083f4a-8530-49f0-9f3b-7e158cf57b2f">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="fieldCourse"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
